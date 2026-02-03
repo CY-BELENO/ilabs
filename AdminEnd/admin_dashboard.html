@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - PUP Lab System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_admin_dashboard.css">
+</head>
+<body class="admin-body">
+    <nav class="navbar navbar-expand-lg navbar-admin">
+        <div class="container">
+            <a class="navbar-brand" href="admin_dashboard.html">
+                <i class="fas fa-university"></i> iLABS Admin
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3 text-white">
+                    <i class="fas fa-user-shield"></i> Super Admin: <span id="adminNameDisplay">Admin</span>
+                </span>
+                <a href="index.html" class="btn btn-admin">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Admin Dashboard Tabs Navigation -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-admin">
+                        <h4 class="mb-0">
+                            <i class="fas fa-tachometer-alt"></i> Super Admin Dashboard 
+                            <span class="float-end">
+                                <i class="fas fa-clock"></i> <span id="currentTime"></span>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="admin-dashboard-tabs">
+                            <button class="admin-dashboard-tab active" onclick="showAdminTab('dashboardOverview')" id="dashboardOverviewTabBtn">
+                                <i class="fas fa-chart-line"></i> Overview
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('userManagement')" id="userManagementTabBtn">
+                                <i class="fas fa-users"></i> Users
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('labManagement')" id="labManagementTabBtn">
+                                <i class="fas fa-desktop"></i> Labs
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('bookingManagement')" id="bookingManagementTabBtn">
+                                <i class="fas fa-calendar-check"></i> Bookings
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('scheduleManagement')" id="scheduleManagementTabBtn">
+                                <i class="fas fa-calendar-alt"></i> Schedules
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('reportsAnalytics')" id="reportsAnalyticsTabBtn">
+                                <i class="fas fa-chart-bar"></i> Reports
+                            </button>
+                            <button class="admin-dashboard-tab" onclick="showAdminTab('systemSettings')" id="systemSettingsTabBtn">
+                                <i class="fas fa-cogs"></i> Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message Alert -->
+        <div id="adminSuccessMessage" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
+            <i class="fas fa-check-circle me-2"></i>
+            <span id="adminSuccessMessageText">Operation successful!</span>
+            <button type="button" class="btn-close" onclick="hideAdminSuccessMessage()"></button>
+        </div>
+
+        <!-- Dashboard Overview Tab (Default) -->
+        <div id="dashboardOverviewTab" class="admin-tab-content active">
+            <div class="row mb-4">
+                <!-- Quick Stats Cards -->
+                <div class="col-md-3 mb-4">
+                    <div class="card admin-stats-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users stats-icon"></i>
+                            <h2 class="stats-number" id="totalUsers">0</h2>
+                            <p class="stats-label">Total Users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card admin-stats-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-desktop stats-icon"></i>
+                            <h2 class="stats-number" id="totalLabs">3</h2>
+                            <p class="stats-label">Laboratories</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card admin-stats-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-calendar-check stats-icon"></i>
+                            <h2 class="stats-number" id="totalBookings">0</h2>
+                            <p class="stats-label">Total Bookings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card admin-stats-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line stats-icon"></i>
+                            <h2 class="stats-number" id="todayBookings">0</h2>
+                            <p class="stats-label">Today's Bookings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header card-header-admin">
+                            <h4 class="mb-0"><i class="fas fa-exclamation-circle"></i> System Alerts</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="systemAlerts">
+                                <!-- Alerts will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header card-header-admin">
+                            <h4 class="mb-0"><i class="fas fa-history"></i> Recent Activities</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="recentActivities">
+                                <!-- Recent activities will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Management Tab -->
+        <div id="userManagementTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0">
+                        <i class="fas fa-users"></i> User Management
+                        <button class="btn btn-admin float-end" onclick="openAddUserModal()">
+                            <i class="fas fa-plus"></i> Add New User
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="userSearch" 
+                                       placeholder="Search users by name, ID, or department...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="userTypeFilter">
+                                    <option value="all">All Users</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="student">Students</option>
+                                    <option value="admin">Admins</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-admin w-100" onclick="searchUsers()">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-admin" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be loaded by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Management Tab -->
+        <div id="labManagementTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0">
+                        <i class="fas fa-desktop"></i> Laboratory Management
+                        <button class="btn btn-admin float-end" onclick="openAddLabModal()">
+                            <i class="fas fa-plus"></i> Add New Lab
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="adminLabsContainer">
+                        <!-- Labs will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Management Tab -->
+        <div id="bookingManagementTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0">
+                        <i class="fas fa-calendar-check"></i> Booking Management
+                        <button class="btn btn-admin-outline float-end" onclick="refreshAllBookings()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Filter by Status</label>
+                                <select class="form-select" id="bookingStatusFilter" onchange="filterBookings()">
+                                    <option value="all">All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Filter by Date</label>
+                                <input type="date" class="form-control" id="bookingDateFilter" onchange="filterBookings()">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Filter by Lab</label>
+                                <select class="form-select" id="bookingLabFilter" onchange="filterBookings()">
+                                    <option value="all">All Labs</option>
+                                    <option value="1">Lab 104</option>
+                                    <option value="2">Lab 203</option>
+                                    <option value="3">Lab 204</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-admin" id="adminBookingsTable">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Date</th>
+                                    <th>Lab</th>
+                                    <th>Faculty</th>
+                                    <th>Time</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBookingsTableBody">
+                                <!-- All bookings will be loaded by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Management Tab -->
+        <div id="scheduleManagementTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0">
+                        <i class="fas fa-calendar-alt"></i> Schedule Management
+                        <button class="btn btn-admin float-end" onclick="openAddScheduleModal()">
+                            <i class="fas fa-plus"></i> Add Schedule
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-admin" id="schedulesTable">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Time</th>
+                                    <th>Lab</th>
+                                    <th>Course</th>
+                                    <th>Faculty</th>
+                                    <th>Section</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedulesTableBody">
+                                <!-- Schedules will be loaded by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports & Analytics Tab -->
+        <div id="reportsAnalyticsTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0"><i class="fas fa-chart-bar"></i> Reports & Analytics</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-header-success">
+                                    <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Lab Usage Statistics</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="labUsageChart">
+                                        <!-- Chart will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header card-header-secondary">
+                                    <h5 class="mb-0"><i class="fas fa-chart-line"></i> Monthly Bookings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="monthlyBookingsChart">
+                                        <!-- Chart will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header card-header-admin">
+                            <h5 class="mb-0"><i class="fas fa-download"></i> Generate Reports</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-admin w-100" onclick="generateReport('daily')">
+                                        <i class="fas fa-calendar-day"></i> Daily Report
+                                    </button>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-admin w-100" onclick="generateReport('monthly')">
+                                        <i class="fas fa-calendar-alt"></i> Monthly Report
+                                    </button>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-admin w-100" onclick="generateReport('users')">
+                                        <i class="fas fa-users"></i> User Activity Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Settings Tab -->
+        <div id="systemSettingsTab" class="admin-tab-content">
+            <div class="card">
+                <div class="card-header card-header-admin">
+                    <h4 class="mb-0"><i class="fas fa-cogs"></i> System Settings</h4>
+                </div>
+                <div class="card-body">
+                    <form id="systemSettingsForm">
+                        <h5 class="mb-3" style="color: var(--admin-blue);">
+                            <i class="fas fa-bell"></i> Notification Settings
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="emailNotifications">
+                                    <label class="form-check-label" for="emailNotifications">
+                                        Enable Email Notifications
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="smsNotifications">
+                                    <label class="form-check-label" for="smsNotifications">
+                                        Enable SMS Notifications
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mb-3" style="color: var(--admin-blue);">
+                            <i class="fas fa-clock"></i> Booking Settings
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Maximum Booking Days in Advance</label>
+                                <input type="number" class="form-control" id="maxBookingDays" min="1" max="365" value="30">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Minimum Booking Duration (hours)</label>
+                                <input type="number" class="form-control" id="minBookingHours" min="0.5" max="24" step="0.5" value="1">
+                            </div>
+                        </div>
+                        
+                        <h5 class="mb-3" style="color: var(--admin-blue);">
+                            <i class="fas fa-user-shield"></i> Security Settings
+                        </h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Session Timeout (minutes)</label>
+                                <input type="number" class="form-control" id="sessionTimeout" min="5" max="480" value="30">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Maximum Login Attempts</label>
+                                <input type="number" class="form-control" id="maxLoginAttempts" min="1" max="10" value="3">
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-admin btn-lg">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Footer -->
+    <footer class="admin-footer-pup">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-university"></i> iLABS Admin Panel</h5>
+                    <p class="mb-0">Super Admin Control System</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="mb-0">
+                        <i class="fas fa-user-shield"></i> <span id="footerAdminName">Super Admin</span><br>
+                        <small>Logged in as System Administrator</small>
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <small>
+                    &copy; <span id="footerYear"></span> iLABS: An IoT-Based Laboratory Room Scheduling System
+                    | System Time: <span id="footerDateTime"></span>
+                </small>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Admin Dashboard Scripts -->
+    <script src="scripts/admin_dashboard.js"></script>
+    <script src="scripts/admin_users.js"></script>
+    <script src="scripts/admin_labs.js"></script>
+    <script src="scripts/admin_bookings.js"></script>
+    <script src="scripts/admin_schedule.js"></script>
+    <script src="scripts/admin_reports.js"></script>
+    <script src="scripts/admin_settings.js"></script>
+</body>
+</html>

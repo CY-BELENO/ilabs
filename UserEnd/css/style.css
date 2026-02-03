@@ -1,0 +1,710 @@
+/* =========================
+   RESULT PAGES STYLES
+   ========================= */
+/* Common styles for book_success.html, book_error.html, cancel_success.html, etc. */
+.result-box {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    background: white;
+}
+
+.result-box.success {
+    border-top: 8px solid #28a745;
+}
+
+.result-box.error {
+    border-top: 8px solid #dc3545;
+}
+
+.result-box.notfound {
+    border-top: 8px solid #6c757d;
+}
+
+.result-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.result-box.success .result-icon {
+    color: #28a745;
+}
+
+.result-box.error .result-icon {
+    color: #dc3545;
+}
+
+.result-box.notfound .result-icon {
+    color: #6c757d;
+}
+
+.result-title {
+    color: #800000;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.result-box p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.result-box .btn-pup {
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-note {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #dee2e6;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.footer-note i {
+    color: #800000;
+    margin-right: 8px;
+}
+
+/* =========================
+   FACULTY DASHBOARD STYLES
+   ========================= */
+/* Room Status Cards */
+.room-status-card {
+    border-radius: 15px !important;
+    margin-bottom: 20px !important;
+    transition: all 0.3s !important;
+    height: 100%;
+}
+
+.room-status-card.available {
+    border: 2px solid #28a745;
+}
+
+.room-status-card.occupied {
+    border: 2px solid #dc3545;
+}
+
+.room-status-card.booked {
+    border: 2px solid #ffc107;
+}
+
+.room-status-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+}
+
+.status-badge {
+    font-size: 0.9rem !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+}
+
+/* Card Headers */
+.card-header-pup {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%) !important;
+    color: white !important;
+    border-bottom: 4px solid var(--pup-gold) !important;
+    padding: 15px 20px !important;
+}
+
+.card-header-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+    color: white !important;
+    border-bottom: 4px solid #FFD700 !important;
+    padding: 15px 20px !important;
+}
+
+/* Day Tabs */
+.day-tab {
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid transparent;
+}
+
+.day-tab:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.day-tab.active {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+    color: white;
+    border-color: var(--pup-gold);
+}
+
+.day-tab i {
+    font-size: 1.1rem;
+}
+
+/* Day Schedules */
+.day-schedule {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.day-schedule.active {
+    display: block;
+}
+
+/* Tables */
+.table-pup {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+}
+
+.table-pup thead {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+    color: white;
+}
+
+.table-pup th {
+    border: none;
+    font-weight: 600;
+    padding: 15px !important;
+}
+
+.table-pup td {
+    padding: 12px 15px !important;
+    vertical-align: middle;
+}
+
+.table-pup tbody tr:hover {
+    background-color: rgba(128, 0, 0, 0.05);
+}
+
+/* Badges */
+.badge-pup {
+    background: var(--pup-maroon);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* Form Elements */
+.btn-pup-outline {
+    background: white;
+    color: var(--pup-maroon);
+    border: 2px solid var(--pup-maroon);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-pup-outline:hover {
+    background: var(--pup-maroon);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Semester Title */
+.semester-title {
+    color: var(--pup-maroon);
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.semester-title i {
+    color: var(--pup-gold);
+    margin-right: 10px;
+}
+/* =========================
+   HOME PAGE STYLES (index.html only)
+   ========================= */
+:root {
+    --pup-maroon: #800000;
+    --pup-dark-maroon: #5a0000;
+    --pup-gold: #FFD700;
+    --light-gray: #f8f9fa;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+}
+
+/* Remove Bootstrap container padding */
+.container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+}
+
+/* Welcome Container */
+.welcome-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+}
+
+/* Main Card */
+.pup-card {
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1100px;
+    transition: transform 0.4s ease;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.pup-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Header Section */
+.pup-header {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+    color: white;
+    padding: 50px 30px;
+    text-align: center;
+    border-bottom: 8px solid var(--pup-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.pup-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+    z-index: 1;
+}
+
+.pup-header i {
+    font-size: 5rem;
+    margin-bottom: 25px;
+    color: var(--pup-gold);
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    animation: float 3s ease-in-out infinite;
+}
+
+.pup-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+.pup-header .h3 {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px 30px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.pup-header h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+}
+
+/* Body Section */
+.pup-body {
+    padding: 50px 35px;
+    background: white;
+}
+
+/* Role Selection Buttons */
+.role-btn {
+    border-radius: 22px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    border: none;
+    height: 100%;
+    display: block;
+    text-decoration: none !important;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.role-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 1;
+}
+
+.role-btn > * {
+    position: relative;
+    z-index: 2;
+}
+
+.role-btn:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.role-btn:hover::before {
+    opacity: 1;
+}
+
+/* Student Button */
+.student-btn {
+    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+}
+
+/* Faculty Button */
+.faculty-btn {
+    background: linear-gradient(135deg, var(--pup-maroon) 0%, var(--pup-dark-maroon) 100%);
+}
+
+/* Role Button Icons */
+.role-btn i {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    display: block;
+}
+
+.role-btn h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.role-btn p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-weight: 300;
+    flex-grow: 1;
+}
+
+.role-btn .btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    padding: 14px 35px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: all 0.3s;
+    color: #333;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    align-self: center;
+}
+
+.role-btn:hover .btn-light {
+    background: white;
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* System Info Section */
+.system-info {
+    background: linear-gradient(to bottom, var(--light-gray), #f0f2f4);
+    border-radius: 20px;
+    padding: 35px;
+    margin-top: 50px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.system-info h5 {
+    color: var(--pup-maroon);
+    font-weight: 700;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.system-info h5 i {
+    margin-right: 10px;
+}
+
+.info-item {
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+}
+
+.info-item i {
+    color: var(--pup-maroon);
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.info-item h5 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.info-item small {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Footer */
+.pup-footer {
+    background: #f8f9fa;
+    padding: 30px;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+    background: linear-gradient(to bottom, #f8f9fa, #f0f2f4);
+}
+
+.current-time {
+    color: var(--pup-maroon);
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+}
+
+.current-time i {
+    margin-right: 10px;
+}
+
+.copyright {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* =========================
+   ANIMATIONS
+   ========================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.pup-card {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.pup-header i {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+@media (max-width: 1200px) {
+    .pup-card {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 992px) {
+    .pup-header h1 {
+        font-size: 1.9rem;
+    }
+    
+    .pup-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .role-btn {
+        padding: 35px 25px;
+        min-height: 300px;
+    }
+    
+    .role-btn i {
+        font-size: 3.5rem;
+    }
+    
+    .role-btn h3 {
+        font-size: 1.6rem;
+    }
+    
+    .role-btn p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-container {
+        padding: 15px;
+    }
+    
+    .pup-card {
+        border-radius: 20px;
+    }
+    
+    .pup-header {
+        padding: 35px 25px;
+    }
+    
+    .pup-header i {
+        font-size: 4rem;
+    }
+    
+    .pup-header h1 {
+        font-size: 1.7rem;
+    }
+    
+    .pup-header .h3 {
+        padding: 12px 20px;
+    }
+    
+    .pup-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .pup-body {
+        padding: 35px 25px;
+    }
+    
+    .role-btn {
+        margin-bottom: 25px;
+        min-height: 280px;
+    }
+    
+    .role-btn .btn-light {
+        padding: 12px 30px;
+    }
+    
+    .system-info {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .pup-header h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    
+    .pup-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .role-btn {
+        min-height: 250px;
+        padding: 30px 20px;
+    }
+    
+    .role-btn i {
+        font-size: 3rem;
+    }
+    
+    .role-btn h3 {
+        font-size: 1.4rem;
+    }
+    
+    .role-btn p {
+        margin-bottom: 20px;
+    }
+    
+    .system-info {
+        padding: 20px 15px;
+    }
+    
+    .info-item {
+        margin-bottom: 20px;
+    }
+    
+    .pup-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+}
+
+/* Remove any leftover .h3 class that might conflict */
+.h3:not(.pup-header .h3) {
+    all: unset;
+}
