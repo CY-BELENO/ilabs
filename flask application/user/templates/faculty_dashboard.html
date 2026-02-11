@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Dashboard - PUP Lab System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="user/static/css/style.css">
+    <link rel="stylesheet" href="user/static/css/style_faculty_dashboard.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-pup">
+        <div class="container">
+            <a class="navbar-brand" href="faculty_dashboard.html">
+                <i class="fas fa-university"></i> iLABS 
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3 text-white">
+                    <i class="fas fa-user-tie"></i> Welcome, <span id="facultyNameDisplay">Faculty</span>
+                </span>
+                <a href="index.html" class="btn btn-pup">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Dashboard Tabs Navigation -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-pup">
+                        <h4 class="mb-0">
+                            <i class="fas fa-tachometer-alt"></i> Faculty Dashboard 
+                            <span class="float-end">
+                                <i class="fas fa-clock"></i> <span id="currentTime"></span>
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="dashboard-tabs">
+                            <button class="dashboard-tab active" onclick="showDashboardTab('semesterSchedule')" id="semesterScheduleTabBtn">
+                                <i class="fas fa-calendar-alt"></i> My Schedule
+                            </button>
+                            <button class="dashboard-tab" onclick="showDashboardTab('labStatus')" id="labStatusTabBtn">
+                                <i class="fas fa-door-open"></i> Lab Status
+                            </button>
+                            <button class="dashboard-tab" onclick="showDashboardTab('myBookings')" id="myBookingsTabBtn">
+                                <i class="fas fa-list"></i> My Bookings
+                            </button>
+                            <button class="dashboard-tab" onclick="showDashboardTab('bookLab')" id="bookLabTabBtn">
+                                <i class="fas fa-book"></i> Book a Lab
+                            </button>
+                            <button class="dashboard-tab" onclick="showDashboardTab('checkAvailability')" id="checkAvailabilityTabBtn">
+                                <i class="fas fa-search"></i> Check Availability
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message Alert (Hidden by default) -->
+        <div id="successMessage" class="alert alert-success alert-dismissible fade" role="alert" style="display: none;">
+            <i class="fas fa-check-circle me-2"></i>
+            <span id="successMessageText">Booking successful!</span>
+            <button type="button" class="btn-close" onclick="hideSuccessMessage()"></button>
+        </div>
+
+        <!-- Semester Schedule Tab (Default) -->
+        <div id="semesterScheduleTab" class="dashboard-tab-content active">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="mb-0"><i class="fas fa-calendar-alt"></i> My Semester Schedule</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="semester-title">
+                        <i class="fas fa-graduation-cap"></i> Academic Year 2024 - Regular Lab Schedule
+                    </h5>
+                    
+                    <!-- Day Buttons -->
+                    <div class="d-flex mb-3 flex-wrap gap-2" id="dayButtons">
+                        <!-- Day buttons will be loaded by JavaScript -->
+                    </div>
+                    
+                    <!-- Day Schedule Display -->
+                    <div id="scheduleDisplay">
+                        <!-- Schedule for selected day will be shown here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Room Status Tab -->
+        <div id="labStatusTab" class="dashboard-tab-content">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="mb-0">
+                        <i class="fas fa-door-open"></i> Lab Room Status
+                        <button class="btn btn-sm btn-pup float-end" onclick="refreshLabStatus()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="labStatusContainer">
+                        <!-- Lab cards will be loaded by JavaScript -->
+                    </div>
+                    
+                    <!-- Booking Modal (hidden by default) -->
+                    <div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header card-header-pup">
+                                    <h5 class="modal-title">
+                                        <i class="fas fa-book"></i> Book Lab Room
+                                    </h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="bookingFormModal">
+                                        <input type="hidden" id="modalLabId">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">
+                                                <i class="fas fa-desktop computer-icon" style="color: #800000;"></i> Lab Room
+                                            </label>
+                                            <input type="text" class="form-control" id="modalLabName" readonly>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">
+                                                <i class="fas fa-calendar" style="color: #800000;"></i> Booking Date
+                                            </label>
+                                            <input type="date" name="date" class="form-control" id="modalBookingDate" required>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">
+                                                    <i class="fas fa-clock" style="color: #800000;"></i> Start Time
+                                                </label>
+                                                <input type="time" name="start_time" class="form-control" id="modalStartTime" required value="09:00">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">
+                                                    <i class="fas fa-clock" style="color: #800000;"></i> End Time
+                                                </label>
+                                                <input type="time" name="end_time" class="form-control" id="modalEndTime" required value="11:00">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">
+                                                <i class="fas fa-file-alt" style="color: #800000;"></i> Purpose
+                                            </label>
+                                            <textarea name="purpose" class="form-control" rows="3" 
+                                                      placeholder="Enter purpose of booking (e.g., Extra class, Project work, Meeting...)" 
+                                                      required id="modalPurpose"></textarea>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-pup w-100 btn-lg">
+                                            <i class="fas fa-paper-plane"></i> Submit Booking Request
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Bookings Tab -->
+        <div id="myBookingsTab" class="dashboard-tab-content">
+            <div class="card">
+                <div class="card-header card-header-secondary">
+                    <h4 class="mb-0">
+                        <i class="fas fa-list"></i> My Lab Bookings
+                        <button class="btn btn-sm btn-pup-outline float-end" onclick="refreshBookings()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div id="bookingsLoading" class="text-center py-4">
+                        <div class="spinner-border spinner-border-sm text-maroon" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading your bookings...</p>
+                    </div>
+                    <div id="bookingsContent" style="display: none;">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-pup" id="bookingsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Lab</th>
+                                        <th>Time</th>
+                                        <th>Purpose</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingsTableBody">
+                                    <!-- Bookings will be loaded by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book a Lab Tab -->
+        <div id="bookLabTab" class="dashboard-tab-content">
+            <div class="card">
+                <div class="card-header card-header-pup">
+                    <h4 class="mb-0"><i class="fas fa-book"></i> Book a Lab Room</h4>
+                </div>
+                <div class="card-body">
+                    <form id="bookingForm">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-desktop computer-icon" style="color: #800000;"></i> Select Lab
+                            </label>
+                            <select name="lab_id" class="form-select" id="labSelect" required>
+                                <option value="">-- Choose Lab --</option>
+                                <option value="1">Lab 104</option>
+                                <option value="2">Lab 203</option>
+                                <option value="3">Lab 204</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-calendar" style="color: #800000;"></i> Booking Date
+                            </label>
+                            <input type="date" name="date" class="form-control" id="bookingDate" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-clock" style="color: #800000;"></i> Start Time
+                                </label>
+                                <input type="time" name="start_time" class="form-control" id="startTime" required value="09:00">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-clock" style="color: #800000;"></i> End Time
+                                </label>
+                                <input type="time" name="end_time" class="form-control" id="endTime" required value="11:00">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-file-alt" style="color: #800000;"></i> Purpose
+                            </label>
+                            <textarea name="purpose" class="form-control" rows="3" 
+                                      placeholder="Enter purpose of booking (e.g., Extra class, Project work, Meeting...)" 
+                                      required id="purposeTextarea"></textarea>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-pup btn-lg">
+                                <i class="fas fa-paper-plane"></i> Submit Booking Request
+                            </button>
+                            <button type="button" class="btn btn-pup-outline" onclick="checkAvailabilityForCurrentForm()">
+                                <i class="fas fa-search"></i> Check Availability First
+                            </button>
+                        </div>
+                        
+                        <div class="mt-3 alert alert-pup">
+                            <small>
+                                <i class="fas fa-info-circle"></i> 
+                                <strong>Note:</strong> This is UI/UX only. In a real system, bookings would be sent to the server.
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Check Availability Tab -->
+        <div id="checkAvailabilityTab" class="dashboard-tab-content">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="mb-0"><i class="fas fa-search"></i> Check Laboratory Availability</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-3" style="color: #800000;">
+                                <i class="fas fa-filter"></i> Filter Options
+                            </h5>
+                            <div class="row mb-4">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Lab Room</label>
+                                    <select class="form-select" id="availabilityLab">
+                                        <option value="all">All Labs</option>
+                                        <option value="1">Lab 104</option>
+                                        <option value="2">Lab 203</option>
+                                        <option value="3">Lab 204</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Date</label>
+                                    <input type="date" class="form-control" id="availabilityDate">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label fw-bold">Time Slot</label>
+                                    <select class="form-select" id="availabilityTime">
+                                        <option value="all">All Day</option>
+                                        <option value="08:00-10:00">08:00 AM - 10:00 AM</option>
+                                        <option value="10:00-12:00">10:00 AM - 12:00 PM</option>
+                                        <option value="13:00-15:00">01:00 PM - 03:00 PM</option>
+                                        <option value="15:00-17:00">03:00 PM - 05:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-pup w-100 mb-4" onclick="performAvailabilityCheck()">
+                                <i class="fas fa-search"></i> Check Availability
+                            </button>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0"><i class="fas fa-info-circle"></i> Quick Tips</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Select specific lab or check all labs</li>
+                                        <li>Choose date to check availability</li>
+                                        <li>Filter by time slot if needed</li>
+                                        <li>Available rooms will show "Book Now" button</li>
+                                        <li>Click "Book Now" to directly book available slots</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="availabilityResults" class="mt-4">
+                        <!-- Availability results will be shown here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer-pup">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-university"></i> iLABS</h5>
+                    <p class="mb-0">Lab Scheduling System - Faculty Portal</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="mb-0">
+                        <i class="fas fa-user-tie"></i> <span id="footerFacultyName">Faculty</span><br>
+                        <small>Logged in as Faculty</small>
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <small>
+                    &copy; <span id="footerYear"></span> iLABS: An IoT-Based Laboratory Room Scheduling Web-Based System 
+with Real-Time Notifications for PUP-ITECH
+. All rights reserved.
+                    | <span id="footerDateTime"></span>
+                </small>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap Modal for Booking -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Faculty Dashboard Script -->
+    <script src="user/static/js/faculty_dashboard.js"></script>
+</body>
+</html>

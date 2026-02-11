@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab Schedules - PUP Student Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="user/static/css/style_student_portal.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-pup">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-university"></i> iLABS
+            </a>
+            <!-- Removed redundant time display from navbar -->
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="today-highlight">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4 class="mb-0">
+                        <i class="fas fa-calendar-check" style="color: #800000;"></i> 
+                        Today's Lab Schedules
+                    </h4>
+                    <p class="mb-0 mt-2" id="todayInfo">
+                        <!-- Will be filled by JavaScript -->
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="d-flex justify-content-end">
+                        <a href="index.html" class="btn btn-pup me-2">
+                            <i class="fas fa-home me-1"></i> Back to Home
+                        </a>
+                        <button class="btn btn-outline-pup" id="refreshButton" onclick="refreshSchedules()">
+                            <i class="fas fa-sync-alt"></i>
+                            <span class="d-none d-md-inline ms-1">Refresh</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="text-center py-5" style="display: none;">
+            <div class="spinner-border text-maroon" role="status">
+                <span class="visually-hidden">Loading schedules...</span>
+            </div>
+            <p class="mt-3">Loading lab schedules...</p>
+        </div>
+        
+        <!-- Labs Container -->
+        <div class="row" id="labsContainer">
+            <!-- Labs will be loaded by JavaScript -->
+        </div>
+        
+        <!-- No Data Message -->
+        <div id="noDataMessage" class="alert alert-info text-center py-4" style="display: none;">
+            <i class="fas fa-calendar-times fa-3x mb-3"></i>
+            <h4>No Schedule Data Available</h4>
+            <p class="mb-0">Check back later or contact the administrator.</p>
+        </div>
+    </div>
+    
+    <footer class="footer-pup">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h5><i class="fas fa-university"></i> iLABS</h5>
+                    <p class="mb-0">Lab Scheduling System - Student Portal</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <small>
+                    &copy; <span id="currentYear"></span> iLABS Scheduling System.
+                </small>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Student Portal Script -->
+   <script src="user/static/js/student_portal.js"></script>
+</body>
+</html>
